@@ -2,553 +2,85 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CryptoHouses — Punk to House Converter</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CryptoHouses — Every punk is a house</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  background: #0e0e0e;
-  color: #eee;
-  font-family: 'Courier New', monospace;
-  min-height: 100vh;
-  padding: 40px 24px;
-}
-h1 {
-  font-size: 20px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: #fff;
-  margin-bottom: 4px;
-}
-.sub {
-  font-size: 11px;
-  color: #555;
-  letter-spacing: 2px;
-  margin-bottom: 48px;
-}
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 48px;
-  justify-content: flex-start;
-}
-.card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-.conversion {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.punk-wrap, .house-wrap {
-  border: 2px solid #333;
-  line-height: 0;
-  background: #638596;
-  image-rendering: pixelated;
-}
-canvas {
-  display: block;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
-  width: 168px;
-  height: 168px;
-}
-.arrow {
-  font-size: 20px;
-  color: #444;
-}
-.punk-id {
-  font-size: 13px;
-  letter-spacing: 2px;
-  color: #aaa;
-}
-.traits-row {
-  font-size: 10px;
-  color: #555;
-  letter-spacing: 1px;
-  text-align: center;
-}
-.palette {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-.swatch {
-  width: 18px;
-  height: 18px;
-  border: 1px solid #222;
-  position: relative;
-}
-.swatch-label {
-  position: absolute;
-  bottom: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 8px;
-  color: #555;
-  white-space: nowrap;
-  letter-spacing: 0;
-}
-.palette-wrap {
-  display: flex;
-  gap: 16px;
-  align-items: flex-end;
-  padding-bottom: 20px;
-}
-.palette-zone {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-.zone-label {
-  font-size: 8px;
-  color: #444;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-.divider {
-  width: 100%;
-  border-top: 1px solid #1a1a1a;
-  margin: 48px 0 32px;
-}
-.section-title {
-  font-size: 10px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: #444;
-  margin-bottom: 24px;
-}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d0d0d;color:#ddd;font-family:"Courier New",monospace;padding:40px 24px;min-height:100vh}
+h1{font-size:18px;letter-spacing:5px;text-transform:uppercase;color:#fff;margin-bottom:6px}
+.sub{font-size:10px;color:#444;letter-spacing:2px;margin-bottom:48px;line-height:1.8}
+.grid{display:flex;flex-wrap:wrap;gap:40px}
+.card{display:flex;flex-direction:column;align-items:center;gap:10px}
+.pair{display:flex;align-items:center;gap:14px}
+.im-wrap{border:2px solid #222;background:#638596;line-height:0}
+.im-wrap img{display:block;image-rendering:pixelated;image-rendering:crisp-edges}
+.arrow{font-size:18px;color:#333}
+.punk-id{font-size:14px;letter-spacing:2px;color:#888;margin-top:4px}
+.punk-label{font-size:9px;color:#3a3a3a;letter-spacing:1px;text-align:center;max-width:380px}
+.swatches{display:flex;gap:12px;margin-top:4px}
+.sw-group{display:flex;flex-direction:column;align-items:center;gap:4px}
+.sw{width:20px;height:20px;border:1px solid #1a1a1a}
+.sw-lbl{font-size:8px;color:#444;letter-spacing:0}
+.divider{border-top:1px solid #1a1a1a;margin:52px 0 32px}
+.section{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#333;margin-bottom:20px}
+.note{font-size:9px;color:#2a2a2a;letter-spacing:1px;line-height:2;margin-top:48px;border-top:1px solid #1a1a1a;padding-top:16px}
 </style>
 </head>
 <body>
-
-<h1>🏠 CryptoHouses</h1>
-<div class="sub">Every punk becomes a house — same pixels, new architecture</div>
-
-<div class="cards" id="cards"></div>
-
-<div class="divider"></div>
-<div class="section-title">Try any punk</div>
-<div style="display:flex;gap:12px;align-items:center;margin-bottom:24px">
-  <input id="punkInput" type="number" min="0" max="9999" placeholder="Punk ID (0–9999)"
-    style="background:#111;border:1px solid #333;color:#eee;padding:8px 12px;font-family:monospace;font-size:13px;width:220px;outline:none">
-  <button onclick="loadPunk()" 
-    style="background:#1a1a1a;border:1px solid #333;color:#aaa;padding:8px 20px;font-family:monospace;font-size:12px;cursor:pointer;letter-spacing:2px">
-    CONVERT
-  </button>
+<h1>CryptoHouses</h1>
+<div class="sub">
+  Every punk is a house.<br>
+  Same pixels. Same colors. Same counts.<br>
+  One‑to‑one — nothing added, nothing removed.
 </div>
-<div id="dynamic" style="display:flex;gap:48px;flex-wrap:wrap"></div>
 
-<script>
-// ─── PUNK COLOR DATA (pre-extracted) ──────────────────────────────────────
-const PUNKS = {
-  3355: {
-    b64: "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAA80lEQVR4nGNgGAXDHjASoeY/JfoJKfh/yk8Qp6TZpvcEzWAi13AGBgYGqDw+H+K0/f9kc068hiOD3JPfcZqFzwcM5uIcRNH4AL7w+397YwNBA1T9G/Caw0LQBAYGhtN71zAwMDAwmDqHYIgRAriCCMX1UZOuMOjom6AowCaGDRDlA2xBRUzwMTDgiWRo2FIMcFnAyMDAwLDv9E2sFpNiOcEg2nf6JoOTqTqcjxw02BxAsgXEGkSRBTDQP38DnF2YGEC5BU6m6iiuJ9ZQZIC3qIBZgguktyxnYCBQmhIVRE6m6rhSDsH6gKQ4IMZAdEAwiCgFALpWPhxcvabMAAAAAElFTkSuQmCC",
-    traits: "Male · Orange Knit Cap · Normal Beard",
-    type: "cottage"
-  },
-  100: {
-    b64: "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAA/klEQVR4nGNgGGngPxQTDZhIMjy0gUFpAtwiqoL/DKEN/5UmINFUtgTV8NAGqlqAYTg1LcFpOLUswWs4MXHBSMBwBiXrBpwK7h2FyN8rwG0WXgugSZKh53ciVgUlrPMhFuGxgGA+wGU4ITkYYCGogoGB4cbZvQwMDAwMGsbOGGIMFvj1EpWTq1Y8YlBU0SQohg0Q5YN13ZhBgU0MGyClLCILkGxBUOl82lpAbNDAAFFxAAMbJ62As/3zIojSgyujwTMZAwPhjMbAgDuz4QoiRqgGmEaMsA8qnc+ApobkooKBAVqQwcIdzRJGJDU4zSEUySgakSKYEZcaUi2gGAAAbm19jL2zDYQAAAAASUVORK5CYII=",
-    traits: "Male · Green Mohawk · 3D Glasses",
-    type: "townhouse"
-  },
-  42: {
-    b64: "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABEElEQVR4nOWUPQ6CQBCFH8ZCSxNLsOEgXMUTQDiBeAIDiUew8QD2NlzAShIqJHReASvI/szuDmjnSzYks/C9fbPLAv+s/pcAFWabk7SwwD0DSHzajEkDG5AEEIuSpBUcEJc0ni3BHDlbRCWaou8TpFGANApYcNXACBehp3sz1tTF1XWdcVwlI8NqRw2GAJAkCfI8l5isFrVdg7ZrnLU4jo/qt9SPpqW6VoC/WTtrlKhTpKVIowD9auusFUVxcBmIRlPlzW6RKHFTVYVhmHFh42VnOkUWI4m55Lw06Pl4AQBu7x5lWWrz/nmP3aWSLj1Or8kU3ASmTeYCPWJIMrVIUxoFqgnrpLETDCZT4JMN5ugDSE5eiNpap9gAAAAASUVORK5CYII=",
-    traits: "Ape · Earring",
-    type: "haunted"
-  }
-};
-
-// ─── COLOR EXTRACTION FROM PUNK CANVAS ────────────────────────────────────
-function extractColors(imgCanvas) {
-  const ctx = imgCanvas.getContext('2d');
-  const data = ctx.getImageData(0, 0, 24, 24).data;
-
-  const top = {}, mid = {}, bot = {};
-
-  for (let y = 0; y < 24; y++) {
-    for (let x = 0; x < 24; x++) {
-      const i = (y * 24 + x) * 4;
-      const r = data[i], g = data[i+1], b = data[i+2], a = data[i+3];
-      if (a < 128) continue; // transparent
-      const hex = '#' + [r,g,b].map(v => v.toString(16).padStart(2,'0')).join('');
-      if (hex === '#000000') continue; // skip outlines
-
-      const bucket = y < 10 ? top : y < 18 ? mid : bot;
-      bucket[hex] = (bucket[hex] || 0) + 1;
-    }
-  }
-
-  const top1 = dominant(top, 0), top2 = dominant(top, 1);
-  const mid1 = dominant(mid, 0), mid2 = dominant(mid, 1);
-  const bot1 = dominant(bot, 0);
-
-  return {
-    roof1: top1 || mid1,
-    roof2: top2 || top1,
-    wall1: mid1,
-    wall2: mid2 || bot1,
-    body1: bot1 || mid1,
-  };
-}
-
-function dominant(obj, rank) {
-  const sorted = Object.entries(obj).sort((a,b) => b[1]-a[1]);
-  return sorted[rank] ? sorted[rank][0] : null;
-}
-
-// ─── HOUSE DRAWING ENGINE ─────────────────────────────────────────────────
-function fill(ctx, x, y, w, h, col) {
-  if (!col) return;
-  ctx.fillStyle = col;
-  ctx.fillRect(x, y, w, h);
-}
-function px(ctx, x, y, col) { fill(ctx, x, y, 1, 1, col); }
-
-function darken(hex, amount) {
-  const n = parseInt(hex.slice(1), 16);
-  const r = Math.max(0, (n >> 16) - amount);
-  const g = Math.max(0, ((n >> 8) & 0xFF) - amount);
-  const b = Math.max(0, (n & 0xFF) - amount);
-  return '#' + [r,g,b].map(v => v.toString(16).padStart(2,'0')).join('');
-}
-
-function drawHouse(c, colors, type) {
-  const ctx = c.getContext('2d');
-  const { roof1, roof2, wall1, wall2, body1 } = colors;
-  const outline = '#000000';
-  const sky = '#638596';
-  const win = lighten(wall1, 40);
-  const winDark = darken(wall1, 20);
-
-  // Clear
-  fill(ctx, 0, 0, 24, 24, sky);
-
-  if (type === 'haunted') {
-    drawHauntedHouse(ctx, colors, outline, sky);
-  } else if (type === 'townhouse') {
-    drawTownHouse(ctx, colors, outline, win, winDark);
-  } else {
-    drawCottageHouse(ctx, colors, outline, win, winDark);
-  }
-}
-
-function lighten(hex, amount) {
-  const n = parseInt(hex.slice(1), 16);
-  const r = Math.min(255, (n >> 16) + amount);
-  const g = Math.min(255, ((n >> 8) & 0xFF) + amount);
-  const b = Math.min(255, (n & 0xFF) + amount);
-  return '#' + [r,g,b].map(v => v.toString(16).padStart(2,'0')).join('');
-}
-
-function drawCottageHouse(ctx, { roof1, roof2, wall1, wall2, body1 }, outline, win, winDark) {
-  // Chimney
-  fill(ctx, 16, 5, 2, 9, body1);
-  fill(ctx, 15, 5, 1, 9, darken(body1, 30));
-  px(ctx, 16, 3, lighten(body1, 60));
-  px(ctx, 17, 2, lighten(body1, 80));
-
-  // Pitched roof - peak at x=12, y=7, base width 15 at y=13
-  for (let r = 0; r < 7; r++) {
-    const lx = Math.round(12 - r * 1.2);
-    const rx = Math.round(12 + r * 1.2);
-    fill(ctx, lx, 7 + r, rx - lx + 1, 1, r % 2 === 0 ? roof1 : roof2);
-  }
-  // Eave
-  fill(ctx, 4, 13, 16, 1, roof2);
-  fill(ctx, 4, 14, 16, 1, darken(roof2, 20));
-
-  // Main wall x=5-18, y=14-21
-  fill(ctx, 5, 14, 13, 8, wall1);
-  fill(ctx, 17, 14, 1, 8, darken(wall1, 20));
-  // Lower accent strip (body color = shirt)
-  fill(ctx, 5, 19, 13, 3, wall2);
-  fill(ctx, 17, 19, 1, 3, darken(wall2, 20));
-
-  // Windows
-  drawWin(ctx, 6, 15, win, winDark, wall1);
-  drawWin(ctx, 14, 15, win, winDark, wall1);
-
-  // Door (centered, using body color)
-  fill(ctx, 11, 17, 3, 5, body1);
-  fill(ctx, 10, 17, 1, 5, darken(body1, 20)); // door shadow
-  px(ctx, 13, 19, lighten(body1, 80)); // knob
-
-  // Ground
-  fill(ctx, 0, 22, 24, 1, darken(wall2, 20));
-  fill(ctx, 0, 23, 24, 1, darken(wall2, 10));
-  fill(ctx, 10, 22, 4, 2, darken(wall2, 40)); // path
-}
-
-function drawTownHouse(ctx, { roof1, roof2, wall1, wall2, body1 }, outline, win, winDark) {
-  // Chimney
-  fill(ctx, 8, 4, 2, 7, body1);
-  fill(ctx, 7, 4, 1, 7, darken(body1, 30));
-  px(ctx, 8, 2, lighten(body1, 60));
-  px(ctx, 9, 3, lighten(body1, 80));
-
-  // Mansard roof
-  fill(ctx, 7, 7, 10, 3, roof1);
-  fill(ctx, 6, 9, 12, 1, roof2);
-  fill(ctx, 7, 10, 10, 2, roof2);
-  fill(ctx, 6, 11, 12, 1, darken(roof2, 20));
-
-  // Walls x=7-16, y=11-21
-  fill(ctx, 7, 11, 10, 11, wall1);
-  fill(ctx, 16, 11, 1, 11, darken(wall1, 20));
-
-  // Body color stripe (floor divide)
-  fill(ctx, 7, 16, 10, 1, wall2);
-
-  // Upper windows
-  drawWin(ctx, 8, 12, win, winDark, wall1);
-  drawWin(ctx, 13, 12, win, winDark, wall1);
-
-  // Lower windows
-  drawWin(ctx, 8, 17, win, winDark, wall1);
-  drawWin(ctx, 13, 17, win, winDark, wall1);
-
-  // Door (body color)
-  fill(ctx, 10, 17, 4, 5, body1);
-  px(ctx, 13, 20, lighten(body1, 80));
-
-  // Steps
-  fill(ctx, 9, 21, 6, 1, wall2);
-  fill(ctx, 10, 22, 4, 1, darken(wall2, 20));
-
-  // Ground
-  fill(ctx, 0, 22, 24, 1, darken(wall2, 30));
-  fill(ctx, 0, 23, 24, 1, darken(wall2, 20));
-  fill(ctx, 10, 22, 4, 2, darken(wall2, 50));
-}
-
-function drawHauntedHouse(ctx, { roof1, roof2, wall1, wall2, body1 }, outline, sky) {
-  // Override sky to dark
-  fill(ctx, 0, 0, 24, 24, '#1a1520');
-
-  // Moon (subtle)
-  fill(ctx, 1, 1, 3, 3, '#eeeecc');
-  px(ctx, 1, 1, '#1a1520');
-  px(ctx, 1, 2, '#1a1520');
-
-  // Bat
-  px(ctx, 18, 3, '#333'); px(ctx, 19, 2, '#333'); px(ctx, 20, 3, '#333');
-
-  // Main spire tower x=10-13
-  fill(ctx, 10, 8, 4, 14, wall1);
-  fill(ctx, 10, 8, 1, 14, darken(wall1, 30));
-  px(ctx, 11, 6, roof1);
-  fill(ctx, 10, 7, 3, 1, roof1);
-  fill(ctx, 10, 8, 4, 1, roof2);
-
-  // Right turret x=17-21
-  fill(ctx, 17, 10, 5, 12, wall2 || wall1);
-  fill(ctx, 17, 10, 1, 12, darken(wall1, 40));
-  px(ctx, 19, 7, roof1);
-  fill(ctx, 18, 8, 3, 1, roof2);
-  fill(ctx, 17, 9, 5, 1, roof2);
-
-  // Left wing x=3-10
-  fill(ctx, 3, 12, 8, 10, wall1);
-  fill(ctx, 3, 12, 1, 10, darken(wall1, 30));
-  fill(ctx, 4, 10, 5, 2, roof1);
-  fill(ctx, 4, 10, 1, 2, roof2);
-  px(ctx, 6, 9, roof2);
-
-  // Spooky windows (yellow glow from wall color lightened)
-  const spook = lighten(body1, 80);
-  fill(ctx, 4, 13, 3, 3, darken(body1, 10));
-  fill(ctx, 5, 13, 1, 3, spook);
-  fill(ctx, 4, 14, 3, 1, spook);
-
-  fill(ctx, 7, 13, 3, 3, darken(body1, 10));
-  fill(ctx, 8, 13, 1, 3, spook);
-  fill(ctx, 7, 14, 3, 1, spook);
-
-  // Turret windows
-  px(ctx, 19, 11, spook); px(ctx, 19, 13, spook); px(ctx, 19, 15, spook);
-
-  // Gothic door
-  fill(ctx, 5, 17, 4, 5, darken(wall1, 60));
-  fill(ctx, 5, 16, 4, 1, darken(wall1, 50));
-  px(ctx, 6, 19, '#333'); px(ctx, 7, 19, '#333');
-
-  // Dead ground
-  fill(ctx, 0, 22, 24, 1, '#222816');
-  fill(ctx, 0, 23, 24, 1, '#1a1e0a');
-  fill(ctx, 5, 22, 4, 2, '#111');
-}
-
-function drawWin(ctx, x, y, win, winDark, wall) {
-  fill(ctx, x, y, 3, 3, darken(wall, 30)); // frame
-  fill(ctx, x+1, y, 1, 3, win);
-  fill(ctx, x, y, 1, 3, winDark);
-  fill(ctx, x+2, y, 1, 3, lighten(win, 20));
-}
-
-// ─── CARD BUILDER ─────────────────────────────────────────────────────────
-function buildCard(punkId, data) {
-  const card = document.createElement('div');
-  card.className = 'card';
-
-  // Load punk image onto offscreen canvas to extract colors
-  const punkCanvas = document.createElement('canvas');
-  punkCanvas.width = 24; punkCanvas.height = 24;
-  const punkCtx = punkCanvas.getContext('2d');
-
-  const img = new Image();
-  img.onload = function() {
-    punkCtx.drawImage(img, 0, 0, 24, 24);
-    const colors = data.colors || extractColors(punkCanvas);
-
-    // Display punk (scaled)
-    const punkDisplay = document.createElement('canvas');
-    punkDisplay.width = 168; punkDisplay.height = 168;
-    const pdCtx = punkDisplay.getContext('2d');
-    pdCtx.imageSmoothingEnabled = false;
-    pdCtx.drawImage(punkCanvas, 0, 0, 168, 168);
-
-    // Draw house
-    const houseCanvas = document.createElement('canvas');
-    houseCanvas.width = 24; houseCanvas.height = 24;
-    drawHouse(houseCanvas, colors, data.type || 'cottage');
-
-    const houseDisplay = document.createElement('canvas');
-    houseDisplay.width = 168; houseDisplay.height = 168;
-    const hdCtx = houseDisplay.getContext('2d');
-    hdCtx.imageSmoothingEnabled = false;
-    hdCtx.drawImage(houseCanvas, 0, 0, 168, 168);
-
-    const punkWrap = document.createElement('div');
-    punkWrap.className = 'punk-wrap';
-    punkWrap.appendChild(punkDisplay);
-
-    const houseWrap = document.createElement('div');
-    houseWrap.className = 'house-wrap';
-    if (data.type === 'haunted') houseWrap.style.background = '#1a1520';
-    houseWrap.appendChild(houseDisplay);
-
-    const arrow = document.createElement('div');
-    arrow.className = 'arrow';
-    arrow.textContent = '→';
-
-    const conv = document.createElement('div');
-    conv.className = 'conversion';
-    conv.append(punkWrap, arrow, houseWrap);
-
-    const id = document.createElement('div');
-    id.className = 'punk-id';
-    id.textContent = `Punk #${punkId}`;
-
-    const traits = document.createElement('div');
-    traits.className = 'traits-row';
-    traits.textContent = data.traits || '';
-
-    // Color palette
-    const palWrap = document.createElement('div');
-    palWrap.className = 'palette-wrap';
-    const zones = [
-      { label: 'ROOF', cols: [colors.roof1, colors.roof2] },
-      { label: 'WALLS', cols: [colors.wall1, colors.wall2] },
-      { label: 'TRIM', cols: [colors.body1] },
-    ];
-    zones.forEach(z => {
-      const zone = document.createElement('div');
-      zone.className = 'palette-zone';
-      const zlbl = document.createElement('div');
-      zlbl.className = 'zone-label';
-      zlbl.textContent = z.label;
-      const row = document.createElement('div');
-      row.className = 'palette';
-      z.cols.filter(Boolean).forEach(col => {
-        const sw = document.createElement('div');
-        sw.className = 'swatch';
-        sw.style.background = col;
-        sw.title = col;
-        row.appendChild(sw);
-      });
-      zone.append(zlbl, row);
-      palWrap.appendChild(zone);
-    });
-
-    card.append(conv, id, traits, palWrap);
-  };
-  img.src = 'data:image/png;base64,' + data.b64;
-
-  return card;
-}
-
-// ─── LOAD PRE-EXTRACTED PUNKS ─────────────────────────────────────────────
-const preExtracted = {
-  3355: { roof1:'#ca4e11', roof2:'#933709', wall1:'#dbb180', wall2:'#997c59', body1:'#997c59' },
-  100:  { roof1:'#229000', roof2:'#005580', wall1:'#ae8b61', wall2:'#229000', body1:'#ae8b61' },
-  42:   { roof1:'#713f1d', roof2:'#713f1d', wall1:'#713f1d', wall2:'#dddddd', body1:'#713f1d' },
-};
-
-const container = document.getElementById('cards');
-[3355, 100, 42].forEach(id => {
-  const data = { ...PUNKS[id], colors: preExtracted[id] };
-  container.appendChild(buildCard(id, data));
-});
-
-// ─── DYNAMIC LOADER ───────────────────────────────────────────────────────
-async function loadPunk() {
-  const id = parseInt(document.getElementById('punkInput').value);
-  if (isNaN(id) || id < 0 || id > 9999) return;
-
-  const dynContainer = document.getElementById('dynamic');
-  dynContainer.innerHTML = '<div style="color:#555;font-size:12px;letter-spacing:2px">LOADING...</div>';
-
-  try {
-    // Try to load via CORS proxy
-    const proxyUrl = `https://corsproxy.io/?https://www.larvalabs.com/public/images/cryptopunks/punk${String(id).padStart(4,'0')}.png`;
-    const res = await fetch(proxyUrl);
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-
-    const img = new Image();
-    img.onload = function() {
-      const tmpC = document.createElement('canvas');
-      tmpC.width = 24; tmpC.height = 24;
-      const tmpCtx = tmpC.getContext('2d');
-      tmpCtx.drawImage(img, 0, 0, 24, 24);
-
-      const colors = extractColors(tmpC);
-
-      // Guess type from colors
-      let type = 'cottage';
-      const allDark = [colors.roof1, colors.wall1, colors.body1].every(c => {
-        const n = parseInt(c.slice(1), 16);
-        const brightness = ((n>>16)*0.299 + ((n>>8)&0xFF)*0.587 + (n&0xFF)*0.114);
-        return brightness < 80;
-      });
-      if (allDark) type = 'haunted';
-      else if (Math.random() > 0.5) type = 'townhouse';
-
-      const buf = [];
-      tmpC.toBlob(blob2 => {
-        const reader = new FileReader();
-        reader.onload = e => {
-          const b64 = e.target.result.split(',')[1];
-          dynContainer.innerHTML = '';
-          dynContainer.appendChild(buildCard(id, { b64, traits: `Punk #${id}`, type, colors }));
-        };
-        reader.readAsDataURL(blob2);
-      });
-    };
-    img.src = url;
-  } catch(e) {
-    dynContainer.innerHTML = `<div style="color:#555;font-size:11px">Could not load punk #${id} — CORS proxy unavailable</div>`;
-  }
-}
-
-document.getElementById('punkInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') loadPunk();
-});
-</script>
+<div class="section">Punk → House</div>
+<div class="grid">
+    <div class="card">
+      <div class="pair">
+        <div class="im-wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAA1UlEQVR4nGNMbp3GQA3ARBVThrdBLLgk5lZnYQriiRnsLppbnXV7YwMDAwMaidV0nAbBTcEEeMzCGUaq/g23NzZASIgRqv7YTSdgENwJ+PUTNgjuO0wGVoAz1hgYGE7vXcPAwGDqHILMJdZFyCEdNemKjr4JXAqNS4KL0PyC32soLppbnfX/phqRoYvPoOTWaYzqtzAVqfoTjjv0MMKaCW5vbMDvLywGYboFvwI4wBfYDKgJkvx0RIx+OCCtPFL1b8BVkhBwEVoY4SmPCHuNyGqGakUtAHLUV4gjJsD2AAAAAElFTkSuQmCC" width="168" height="168"></div>
+        <div class="arrow">→</div>
+        <div class="im-wrap house"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAAp0lEQVR4nGNMbp3GQA3ARBVTRg1CgLnVWXOrs6hgEB5AX4NweYc0g+ZWZy3L0yFoFgsxpjAwMCzL04nCaxY+g+ZWZyW3TtsL4ya3QkWwKsbpNax6klunkRb9eGzGZRYjmgZiIghuIjIXSxjd3thA0BRVf3Q1VEuQBKIf2Wb8LiXsoktzE/7fVCPoX6K8dudGFEE1BLxGTMDjNAgzRogBjMTbiR9QLfoB7KY62a9IKWQAAAAASUVORK5CYII=" width="168" height="168"></div>
+      </div>
+      <div class="punk-id">#6058</div>
+      <div class="punk-label">Punk #6058 · Male · Earring</div>
+      <div class="swatches"><div class="sw-group"><div class="sw" style="background:#000000" title="#000000"></div><div class="sw-lbl">69px</div></div><div class="sw-group"><div class="sw" style="background:#dbb180" title="#dbb180"></div><div class="sw-lbl">117px</div></div><div class="sw-group"><div class="sw" style="background:#a66e2c" title="#a66e2c"></div><div class="sw-lbl">4px</div></div><div class="sw-group"><div class="sw" style="background:#d29d60" title="#d29d60"></div><div class="sw-lbl">2px</div></div><div class="sw-group"><div class="sw" style="background:#ffd926" title="#ffd926"></div><div class="sw-lbl">1px</div></div></div>
+    </div>
+    <div class="card">
+      <div class="pair">
+        <div class="im-wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAA9UlEQVR4nGNMbp3GQA3ARBVThrdBLLgk5lZnYQriiRnsBs2tzjrlJ4gpbladhcssLF7DZQoDA8MpP0GsLmVgYGBEs2FuddZkc06sSuEg9+R3THdhD2xzcQ48JFEugjjq9sYGXBpU/RuwBhPOWGNgYDi9dw0DA4OpcwgyFxdA9xqyc6ImXdHRN4FLoXFJcBGaB/H4F4uLGBgYVP3xaSDWIEhA7jt9E81ogqbj9Nq+0zedTNUhbLin0CwgyiD82kgzCAL652+AMAoTA0g2yMlUHe4c/PrhAGd5BA8gZJDeshxX7sfnNSdTdbTIIrk8IlIzMqBaUQsANftRZmimMdsAAAAASUVORK5CYII=" width="168" height="168"></div>
+        <div class="arrow">→</div>
+        <div class="im-wrap house"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAAwElEQVR4nGNMbp3GQA3ARBVTRg2igUFm3w+bfT9MBYPwAKIMmludRQWD5lZnzayJJGgWCzGmMDAwzKyJTK/OYsCdDfC5CG4KBOB3F06D0EwhaBZ2g7Cagt8sRrTcT0wEQQCaRiyBfXtjA0FTVP3R1WD32vu5E9/PnYhVHJfRBNIRps24APZ0JJicD2Hc3tgAcQVEBC5OsouQAR5/4XQRVtfhcQ52g4gPF2SAno7goELnFYTRcUWMGINweo1I/XAAAFCCRFP/FgCiAAAAAElFTkSuQmCC" width="168" height="168"></div>
+      </div>
+      <div class="punk-id">#3355</div>
+      <div class="punk-label">Punk #3355 · Male · Orange Knit Cap · Normal Beard</div>
+      <div class="swatches"><div class="sw-group"><div class="sw" style="background:#000000" title="#000000"></div><div class="sw-lbl">52px</div></div><div class="sw-group"><div class="sw" style="background:#dbb180" title="#dbb180"></div><div class="sw-lbl">63px</div></div><div class="sw-group"><div class="sw" style="background:#997c59" title="#997c59"></div><div class="sw-lbl">33px</div></div><div class="sw-group"><div class="sw" style="background:#ca4e11" title="#ca4e11"></div><div class="sw-lbl">21px</div></div><div class="sw-group"><div class="sw" style="background:#933709" title="#933709"></div><div class="sw-lbl">17px</div></div><div class="sw-group"><div class="sw" style="background:#a66e2c" title="#a66e2c"></div><div class="sw-lbl">4px</div></div><div class="sw-group"><div class="sw" style="background:#281b09" title="#281b09"></div><div class="sw-lbl">3px</div></div><div class="sw-group"><div class="sw" style="background:#d29d60" title="#d29d60"></div><div class="sw-lbl">2px</div></div></div>
+    </div>
+    <div class="card">
+      <div class="pair">
+        <div class="im-wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAABEUlEQVR4nGNMbp3GQA3ARBVTiDJobnXW3OosSg2aW53FENqgNIGBoFn4DIKaYt1w7yhhswi4CGqKdcO9ow1kumhudZbSBAa4KUrWDQyhDXgchd0gTFMImoXTRZimQM3CARgxEyQ8jHGaXsCAqYsFq/EQU3p+J6KJl+B2EU6vYZqCSxCfiyDgxtm9DAwMGsbOyFwGCxJdxMDAULXikaKKJi4uCS5a152Ih0uCi0gCRBkUVDqfOgbh9xQE4AsjCNg4aQWE4Z8XgUcZesqG5DIIwJIgWaF+xEzc6F5Lbp12rwCqlAE1dIJK58OliMoiya3T5hZAs/i67kS4WRDNcwuysNYX2AMbWSkkpOEiuGodqqUjAPp2hdQ2E2TyAAAAAElFTkSuQmCC" width="168" height="168"></div>
+        <div class="arrow">→</div>
+        <div class="im-wrap house"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAAzElEQVR4nGNMbp3GQA3ARBVTRg2igUH7ubP2c2dRwSA8gCiD5lZjdwVpBs2tzlKaQNgsAgZBTGFgYCBoFj6D4KZAgNIEhnsFDI5fsWcpnAahmQI3C5e7sBuE1RT8ZjGi5X5iIggC0DSyYKpY151I0JSg0vloIti9FnRKPuiUPFZxXEZjcREum/G7FLtB68wewjVDXAERgYtjAhLyGh5/4XQRdtfhdg52gzBjhBjA4s12GkUAljrQxWFg6y9T7Abhktj6yxTTLFyKGRgYAFqaRRD2y9AUAAAAAElFTkSuQmCC" width="168" height="168"></div>
+      </div>
+      <div class="punk-id">#100</div>
+      <div class="punk-label">Punk #100  · Male · Green Mohawk · 3D Glasses</div>
+      <div class="swatches"><div class="sw-group"><div class="sw" style="background:#000000" title="#000000"></div><div class="sw-lbl">55px</div></div><div class="sw-group"><div class="sw" style="background:#ae8b61" title="#ae8b61"></div><div class="sw-lbl">76px</div></div><div class="sw-group"><div class="sw" style="background:#229000" title="#229000"></div><div class="sw-lbl">52px</div></div><div class="sw-group"><div class="sw" style="background:#005580" title="#005580"></div><div class="sw-lbl">18px</div></div><div class="sw-group"><div class="sw" style="background:#86581e" title="#86581e"></div><div class="sw-lbl">4px</div></div><div class="sw-group"><div class="sw" style="background:#5f1d09" title="#5f1d09"></div><div class="sw-lbl">3px</div></div><div class="sw-group"><div class="sw" style="background:#a77c47" title="#a77c47"></div><div class="sw-lbl">2px</div></div></div>
+    </div>
+    <div class="card">
+      <div class="pair">
+        <div class="im-wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAABJElEQVR4nGNMbp3GQA3ARBVTSDNobnUWaQbBNSDrnFudBQkEXMahGwTRgGYWnEQzGrtBWDXjcgLcgVgMQnYIfoBVGRYXEQlweo3UBIXTa3hcVGgvW2gvi8cUhEFYTYHr7z/4GMJFttVWRwVZMSOy2cjGoTkBDiCGMjAw5OfnfxFTR3cRVkc9ff746fPHuLiGTt5YvAYBaD5fdYtBRpATFxcN4EtHhfay/zlEcHHP79uK00WYjsIFklunkeA1OIAHMDI4fOUOPhdhZiIGWAz2H3wMNxEtAzMwMLBguhlN5OblJwwMDNve/T927BiyuMzUBDkkWxlxeWdudRZaUsL0ILJedBehgf6Dj5GNwxMVBAwqtJeFOwR/hBIusyEuIpgsqFaLAABFk48CF5XQ1gAAAABJRU5ErkJggg==" width="168" height="168"></div>
+        <div class="arrow">→</div>
+        <div class="im-wrap house"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAA0klEQVR4nGNMbp3GQA3ARBVTRg1CgLnVWXOrs6hgEB5AX4NweYc0g+ZWZx07doygWSzEmMLAwHDs2DErKys8KhnxZBGoW/ZfQBbBpR6n1yB6kE1hYGBIbp1GWvTjsRmXWeheIyaC4CYSdhEcFNrLQhCaIKZKLLFWaC/79PljBgYGaUlZZEEGBoZ/BkFMF9ZhtZJA9PcffIxsFvOJWf85REgwCNktd+/eZWBgUFZWZmBgwGUKA0l57Z9BEB5ZAl5jYGCYkuQAtRNH6FAZMGKNy4EEAGM2SUajqJWwAAAAAElFTkSuQmCC" width="168" height="168"></div>
+      </div>
+      <div class="punk-id">#42</div>
+      <div class="punk-label">Punk #42   · Ape  · Earring</div>
+      <div class="swatches"><div class="sw-group"><div class="sw" style="background:#000000" title="#000000"></div><div class="sw-lbl">172px</div></div><div class="sw-group"><div class="sw" style="background:#713f1d" title="#713f1d"></div><div class="sw-lbl">71px</div></div><div class="sw-group"><div class="sw" style="background:#c6c6c6" title="#c6c6c6"></div><div class="sw-lbl">5px</div></div><div class="sw-group"><div class="sw" style="background:#dddddd" title="#dddddd"></div><div class="sw-lbl">4px</div></div><div class="sw-group"><div class="sw" style="background:#562600" title="#562600"></div><div class="sw-lbl">4px</div></div><div class="sw-group"><div class="sw" style="background:#6f6f6f" title="#6f6f6f"></div><div class="sw-lbl">2px</div></div><div class="sw-group"><div class="sw" style="background:#723709" title="#723709"></div><div class="sw-lbl">2px</div></div><div class="sw-group"><div class="sw" style="background:#4a1201" title="#4a1201"></div><div class="sw-lbl">2px</div></div><div class="sw-group"><div class="sw" style="background:#e25b26" title="#e25b26"></div><div class="sw-lbl">1px</div></div></div>
+    </div></div>
+
+<div class="note">
+  The pixel color counts in each house are identical to the original punk.<br>
+  Skin tone → walls. Hat/hair → roof. Rare traits → door, windows, detail.<br>
+  Black outlines stay black. Sky stays sky. Only the arrangement changes.
+</div>
 </body>
 </html>
