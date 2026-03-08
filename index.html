@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CryptoHouses — Prototype</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #111;
+    color: #eee;
+    font-family: 'Courier New', monospace;
+    padding: 32px;
+  }
+  h1 {
+    font-size: 22px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    color: #fff;
+  }
+  .subtitle {
+    font-size: 12px;
+    color: #666;
+    letter-spacing: 2px;
+    margin-bottom: 36px;
+  }
+  .section-title {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #555;
+    margin: 36px 0 16px;
+    border-bottom: 1px solid #222;
+    padding-bottom: 8px;
+  }
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .canvas-wrap {
+    border: 2px solid var(--rarity-color, #444);
+    background: #638596;
+    line-height: 0;
+  }
+  canvas {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    display: block;
+    width: 192px;
+    height: 192px;
+  }
+  .card-name {
+    font-size: 11px;
+    color: #ccc;
+    letter-spacing: 1px;
+  }
+  .rarity-badge {
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    padding: 2px 8px;
+    color: var(--rarity-color, #888);
+    border: 1px solid var(--rarity-color, #444);
+  }
+  .trait-list {
+    font-size: 9px;
+    color: #555;
+    text-align: center;
+    letter-spacing: 1px;
+    line-height: 1.8;
+    max-width: 192px;
+  }
+  .trait-list span {
+    color: #888;
+  }
+  .trait-list .rare-trait {
+    color: var(--rarity-color, #888);
+  }
+</style>
+</head>
+<body>
+<h1>🏠 CryptoHouses</h1>
+<div class="subtitle">Base Types × Trait Layers — Pixel Prototype v0.1</div>
+
+<div class="section-title">Base Types (like Zombie / Ape / Female / Male)</div>
+<div class="grid" id="bases"></div>
+
+<div class="section-title">Trait Variations (same base, different traits)</div>
+<div class="grid" id="traits"></div>
+
+<div class="section-title">Rare &amp; Legendary</div>
+<div class="grid" id="rares"></div>
+
+<script>
+// ─── COLOR PALETTE ─────────────────────────────────────────────────────────
+const P = {
+  sky: '#638596',
+  // Walls
+  cream: '#E8DFCC', creamDk: '#C8BDA8',
+  brick: '#C87040', brickDk: '#9A5028',
+  stone: '#9A9A9A', stoneDk: '#6A6A6A',
+  darkWall: '#2A2030', darkWallDk: '#1A1020',
+  // Roofs
+  roofRed: '#CC3333', roofRedDk: '#882020',
+  roofGreen: '#4A7A4A', roofGreenDk: '#2A5A2A',
+  roofSlate: '#445566', roofSlateDk: '#223344',
+  roofTatch: '#C8A030', roofTatchDk: '#9A7820',
+  roofTile: '#D4963C', roofTileDk: '#B07830',
+  roofGothic: '#1A1A2E', roofGothicDk: '#0D0D18',
+  // Doors
+  doorBrown: '#8B4513', doorRed: '#CC2222', doorBlue: '#1A3A8B', doorGold: '#D4A020', doorIron: '#1A1A1A',
+  // Windows
+  winGlass: '#9ABBCC', winLight: '#CCE8FF', winDark: '#4A6A88', winFrame: '#4A3020', winSpooky: '#BBAA00',
+  // Details
+  chimney: '#886655', chimneyDk: '#5A3A28',
+  smoke: '#CCCCCC', smokeL: '#EEEEEE',
+  trim: '#FFFFFF', black: '#111111',
+  accent: '#F0C040',
+  // Ground
+  grass: '#4A7A3A', grassL: '#5A9A4A',
+  deadGrass: '#2A3A1A', deadGrassL: '#1A2A08',
+  path: '#C8B888', pathDk: '#A09060',
+  cobble: '#787878',
+};
+
+// ─── DRAW HELPERS ──────────────────────────────────────────────────────────
+function fill(ctx, x, y, w, h, col) {
+  if (!col || col === 'none') return;
+  ctx.fillStyle = col;
+  ctx.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h));
+}
+function px(ctx, x, y, col) { fill(ctx, x, y, 1, 1, col); }
+
+function makeCanvas() {
+  const c = document.createElement('canvas');
+  c.width = 24; c.height = 24;
+  return c;
+}
+
+// ─── COMPONENT RENDERERS ───────────────────────────────────────────────────
+
+function drawGround(ctx, style) {
+  if (style === 'dead') {
+    fill(ctx, 0, 22, 24, 1, P.deadGrass);
+    fill(ctx, 0, 23, 24, 1, P.deadGrassL);
+  } else {
+    fill(ctx, 0, 22, 24, 1, P.grass);
+    fill(ctx, 0, 23, 24, 1, P.grassL);
+  }
+}
+
+function drawPath(ctx, x, w, style) {
+  const col = style === 'cobble' ? P.cobble : P.path;
+  fill(ctx, x, 22, w, 2, col);
+}
+
+function drawWindow(ctx, x, y, style) {
+  // style: 'normal', 'dark', 'spooky', 'arched'
+  fill(ctx, x, y, 3, 3, P.winFrame);
+  if (style === 'spooky') {
+    fill(ctx, x+1, y, 1, 3, P.winSpooky);
+    fill(ctx, x, y+1, 3, 1, P.winSpooky);
+    px(ctx, x, y, P.winSpooky);
+  } else {
+    fill(ctx, x+1, y, 1, 3, P.winLight);
+    fill(ctx, x+2, y, 1, 3, P.winGlass);
+    fill(ctx, x, y, 1, 3, P.winDark);
+  }
+}
+
+function drawChimney(ctx, x, y, h, smk) {
+  fill(ctx, x, y, 2, h, P.chimney);
+  fill(ctx, x-1, y, 1, h, P.chimneyDk);
+  if (smk) {
+    px(ctx, x, y-2, P.smoke);
+    px(ctx, x+1, y-3, P.smokeL);
+  }
+}
+
+// Pitched roof: peak at (px_,py_), base width bw centered, height rh
+function drawPitchedRoof(ctx, cx, py, bw, rh, col, colDk) {
+  const halfB = bw / 2;
+  for (let r = 0; r < rh; r++) {
+    const frac = r / (rh - 1);
+    const lx = cx - halfB * frac;
+    const rx = cx + halfB * frac;
+    const c = r % 2 === 0 ? col : colDk;
+    fill(ctx, Math.round(lx), py + r, Math.round(rx - lx) + 1, 1, c);
+  }
+}
+
+function drawFlatRoof(ctx, x, y, w, col, colDk) {
+  fill(ctx, x, y, w, 1, col);
+  fill(ctx, x, y+1, w, 1, colDk);
+}
+
+// ─── HOUSE DRAWERS ─────────────────────────────────────────────────────────
+
+// BASE TYPE 1: COTTAGE — small, cozy, symmetrical
+function drawCottage(ctx, t) {
+  const wallCol = t.material === 'brick' ? P.brick : P.cream;
+  const wallDk  = t.material === 'brick' ? P.brickDk : P.creamDk;
+
+  const roof = roofColors(t.roofStyle);
+
+  // Chimney (drawn behind roof)
+  if (t.hasChimney) drawChimney(ctx, 16, 6, 7, true);
+
+  // Pitched roof: peak at x=12, y=8, base=14 wide, height=6
+  drawPitchedRoof(ctx, 12, 8, 14, 6, roof[0], roof[1]);
+  // Eave shadow
+  fill(ctx, 5, 13, 14, 1, roof[1]);
+
+  // Wall: x=5-18, y=13-21
+  fill(ctx, 5, 13, 14, 9, wallCol);
+  fill(ctx, 18, 13, 1, 9, wallDk); // right shadow
+
+  // Brick texture
+  if (t.material === 'brick') {
+    for (let r = 0; r < 9; r++) {
+      const offset = r % 2 === 0 ? 0 : 1;
+      for (let c = 5+offset; c < 18; c += 3) {
+        px(ctx, c, 13+r, P.brickDk);
+      }
+    }
+  }
+
+  // Windows
+  drawWindow(ctx, 6, 14, t.windowStyle || 'normal');
+  drawWindow(ctx, 15, 14, t.windowStyle || 'normal');
+
+  // Door
+  const dc = doorColor(t.doorStyle);
+  fill(ctx, 11, 17, 3, 5, dc);
+  if (t.doorStyle === 'gold') {
+    px(ctx, 10, 17, dc); px(ctx, 14, 17, dc); // arch hints
+    fill(ctx, 11, 16, 3, 1, dc);
+  }
+  px(ctx, 13, 19, P.accent); // knob
+
+  // Window shutters (if rare trait)
+  if (t.hasShutters) {
+    fill(ctx, 5, 14, 1, 3, '#5A7A5A');
+    fill(ctx, 9, 14, 1, 3, '#5A7A5A');
+    fill(ctx, 14, 14, 1, 3, '#5A7A5A');
+    fill(ctx, 18, 14, 1, 3, '#5A7A5A');
+  }
+
+  // Ground
+  drawGround(ctx, 'grass');
+  drawPath(ctx, 11, 3, 'stone');
+
+  // Bushes
+  if (t.hasBush) {
+    fill(ctx, 5, 19, 3, 3, P.grass);
+    px(ctx, 6, 18, P.grassL);
+    fill(ctx, 17, 19, 3, 3, P.grass);
+    px(ctx, 18, 18, P.grassL);
+  }
+
+  // Antenna
+  if (t.hasAntenna) {
+    px(ctx, 12, 6, P.black); px(ctx, 12, 7, P.black);
+    px(ctx, 11, 7, P.black); px(ctx, 13, 7, P.black);
+  }
+}
+
+// BASE TYPE 2: TOWNHOUSE — tall, narrow, 2-story urban
+function drawTownhouse(ctx, t) {
+  const wallCol = t.material === 'stone' ? P.stone : P.brick;
+  const wallDk  = t.material === 'stone' ? P.stoneDk : P.brickDk;
+
+  const roof = roofColors(t.roofStyle === 'mansard' ? 'slate' : t.roofStyle);
+
+  // Chimney
+  if (t.hasChimney) drawChimney(ctx, 8, 5, 6, true);
+
+  // Roof
+  if (t.roofStyle === 'mansard') {
+    // Mansard: steep sides + flat top
+    fill(ctx, 7, 7, 10, 3, '#667788');
+    fill(ctx, 8, 10, 8, 2, '#445566');
+    fill(ctx, 7, 11, 10, 1, '#334455');
+  } else {
+    drawPitchedRoof(ctx, 12, 7, 10, 5, roof[0], roof[1]);
+    fill(ctx, 7, 11, 10, 1, roof[1]);
+  }
+
+  // Walls: x=7-16, y=11-21
+  fill(ctx, 7, 11, 10, 11, wallCol);
+  fill(ctx, 16, 11, 1, 11, wallDk);
+
+  // Brick lines
+  if (t.material !== 'stone') {
+    for (let r = 0; r < 11; r++) {
+      const off = r % 2 === 0 ? 0 : 1;
+      for (let c = 7+off; c < 16; c += 3) {
+        px(ctx, c, 11+r, wallDk);
+      }
+    }
+  }
+
+  // Floor divider
+  fill(ctx, 7, 16, 10, 1, wallDk);
+
+  // Upper floor windows
+  drawWindow(ctx, 8, 12, 'normal');
+  drawWindow(ctx, 13, 12, 'normal');
+
+  // Lower floor windows (sides of door)
+  drawWindow(ctx, 8, 17, 'normal');
+  drawWindow(ctx, 13, 17, 'normal');
+
+  // Door
+  const dc = doorColor(t.doorStyle);
+  fill(ctx, 10, 17, 4, 5, dc);
+  if (t.doorStyle === 'gold') {
+    px(ctx, 9, 17, dc); px(ctx, 14, 17, dc);
+    fill(ctx, 10, 16, 4, 1, dc);
+  }
+  px(ctx, 12, 20, P.accent);
+
+  // Steps
+  fill(ctx, 9, 21, 6, 1, P.stone);
+  fill(ctx, 10, 22, 4, 1, P.stoneDk);
+
+  drawGround(ctx, 'grass');
+  drawPath(ctx, 10, 4, 'cobble');
+
+  if (t.hasAntenna) {
+    px(ctx, 11, 5, P.black); px(ctx, 11, 6, P.black);
+    px(ctx, 10, 6, P.black); px(ctx, 12, 6, P.black);
+  }
+}
+
+// BASE TYPE 3: VILLA — wide, grand, single story
+function drawVilla(ctx, t) {
+  const roof = roofColors(t.roofStyle);
+
+  // Chimney (left)
+  if (t.hasChimney) drawChimney(ctx, 4, 7, 6, true);
+
+  // Wide shallow roof
+  drawFlatRoof(ctx, 1, 11, 22, roof[0], roof[1]);
+  // Slight triangular peak
+  fill(ctx, 10, 10, 4, 1, roof[0]);
+  fill(ctx, 11, 9, 2, 1, roof[0]);
+  // Trim / cornice
+  fill(ctx, 1, 13, 22, 1, P.trim);
+
+  // Main wall: x=1-22, y=13-21
+  fill(ctx, 1, 13, 22, 9, P.cream);
+  fill(ctx, 22, 13, 1, 9, P.creamDk);
+
+  // Columns (x=9 and x=14)
+  fill(ctx, 9, 11, 1, 11, '#E8E8E0');
+  fill(ctx, 14, 11, 1, 11, '#E8E8E0');
+  fill(ctx, 8, 11, 1, 11, P.creamDk); // shadow left column
+  fill(ctx, 15, 11, 1, 11, P.creamDk); // shadow right column
+
+  // Large windows (left and right wings)
+  fill(ctx, 2, 14, 5, 6, P.winFrame);
+  fill(ctx, 3, 14, 3, 6, P.winGlass);
+  fill(ctx, 3, 14, 1, 6, P.winLight);
+  fill(ctx, 2, 14, 1, 6, P.winDark);
+
+  fill(ctx, 17, 14, 5, 6, P.winFrame);
+  fill(ctx, 18, 14, 3, 6, P.winGlass);
+  fill(ctx, 18, 14, 1, 6, P.winLight);
+  fill(ctx, 17, 14, 1, 6, P.winDark);
+
+  // Grand door (center)
+  const dc = doorColor(t.doorStyle);
+  fill(ctx, 10, 14, 4, 8, dc);
+  if (t.doorStyle === 'gold') {
+    // Arched top
+    px(ctx, 9, 14, dc); px(ctx, 14, 14, dc);
+    fill(ctx, 10, 13, 4, 1, dc);
+  }
+  // Center split line
+  fill(ctx, 12, 14, 1, 8, '#00000022');
+  px(ctx, 13, 17, P.accent); // knob
+
+  drawGround(ctx, 'grass');
+  drawPath(ctx, 9, 6, 'stone');
+
+  // Bushes flanking entrance
+  if (t.hasBush) {
+    fill(ctx, 6, 18, 3, 4, P.grass);
+    px(ctx, 7, 17, P.grassL);
+    fill(ctx, 15, 18, 3, 4, P.grass);
+    px(ctx, 16, 17, P.grassL);
+  }
+}
+
+// BASE TYPE 4: HAUNTED — gothic, rare (like Zombie/Ape)
+function drawHaunted(ctx, t) {
+  // Dark sky override
+  fill(ctx, 0, 0, 24, 24, '#1A1520');
+
+  // Moon
+  fill(ctx, 1, 1, 3, 3, '#EEEECC');
+  fill(ctx, 2, 1, 1, 3, '#FFFFEE');
+  px(ctx, 1, 1, '#1A1520'); // carve crescent
+
+  // Bat silhouette
+  px(ctx, 18, 3, '#333'); px(ctx, 19, 2, '#333'); px(ctx, 20, 3, '#333');
+  px(ctx, 19, 3, '#222');
+
+  // Main spire (tower) x=10-13, y=2-12
+  fill(ctx, 10, 8, 4, 14, P.darkWall);
+  fill(ctx, 10, 8, 1, 14, P.darkWallDk);
+  // Spire peak
+  px(ctx, 11, 6, P.roofGothic);
+  fill(ctx, 10, 7, 3, 1, P.roofGothic);
+  fill(ctx, 10, 8, 4, 1, P.roofGothicDk);
+
+  // Right turret x=17-21, y=8-21
+  fill(ctx, 17, 10, 5, 12, '#3A2840');
+  fill(ctx, 17, 10, 1, 12, P.darkWallDk);
+  // Turret cone roof
+  px(ctx, 19, 7, P.roofGothic);
+  fill(ctx, 18, 8, 3, 1, P.roofGothicDk);
+  fill(ctx, 17, 9, 5, 1, P.roofGothicDk);
+
+  // Left wing x=3-10, y=12-21
+  fill(ctx, 3, 12, 8, 10, P.darkWall);
+  fill(ctx, 3, 12, 1, 10, P.darkWallDk);
+  // Gabled left
+  fill(ctx, 4, 10, 5, 2, P.roofGothic);
+  fill(ctx, 4, 10, 1, 2, P.roofGothicDk);
+  px(ctx, 6, 9, P.roofGothicDk);
+
+  // Chimney
+  if (t.hasChimney) {
+    fill(ctx, 17, 5, 2, 5, '#554444');
+    fill(ctx, 16, 5, 1, 5, '#3A2828');
+    px(ctx, 17, 3, P.smoke); px(ctx, 18, 2, '#AAAAAA');
+  }
+
+  // Spooky windows (yellow glow)
+  drawWindow(ctx, 4, 13, 'spooky');
+  drawWindow(ctx, 7, 13, 'spooky');
+  // Turret windows
+  px(ctx, 19, 11, P.winSpooky); px(ctx, 19, 13, P.winSpooky); px(ctx, 19, 15, P.winSpooky);
+
+  // Gothic arched door
+  fill(ctx, 5, 17, 4, 5, P.doorIron);
+  fill(ctx, 5, 16, 4, 1, '#2A1A00');
+  px(ctx, 5, 15, '#2A1A00'); px(ctx, 8, 15, '#2A1A00');
+  px(ctx, 6, 15, '#2A1A00'); px(ctx, 7, 15, '#2A1A00');
+  // Iron bars
+  px(ctx, 6, 18, '#333'); px(ctx, 7, 18, '#333');
+  px(ctx, 6, 20, '#333'); px(ctx, 7, 20, '#333');
+
+  // Dead ground
+  fill(ctx, 0, 22, 24, 1, '#222816');
+  fill(ctx, 0, 23, 24, 1, '#1A1E0A');
+  fill(ctx, 5, 22, 4, 2, '#111'); // dark path
+}
+
+// ─── LOOKUP HELPERS ────────────────────────────────────────────────────────
+function roofColors(style) {
+  return {
+    'red':     [P.roofRed, P.roofRedDk],
+    'green':   [P.roofGreen, P.roofGreenDk],
+    'slate':   [P.roofSlate, P.roofSlateDk],
+    'thatched':[P.roofTatch, P.roofTatchDk],
+    'tiled':   [P.roofTile, P.roofTileDk],
+    'gothic':  [P.roofGothic, P.roofGothicDk],
+    'mansard': ['#667788', '#445566'],
+  }[style] || [P.roofRed, P.roofRedDk];
+}
+function doorColor(style) {
+  return { 'brown': P.doorBrown, 'red': P.doorRed, 'blue': P.doorBlue, 'gold': P.doorGold, 'iron': P.doorIron }[style] || P.doorBrown;
+}
+
+const rarityMeta = {
+  'Common':    { color: '#777777', symbol: '' },
+  'Uncommon':  { color: '#5B9BD5', symbol: '✦' },
+  'Rare':      { color: '#9B59B6', symbol: '✦✦' },
+  'Epic':      { color: '#F39C12', symbol: '✦✦✦' },
+  'Legendary': { color: '#E74C3C', symbol: '✦✦✦✦' },
+};
+
+// ─── HOUSE DEFINITIONS ─────────────────────────────────────────────────────
+
+const BASE_HOUSES = [
+  {
+    id: 'cottage',
+    label: 'Cottage',
+    rarity: 'Common',
+    traits: ['Base Type: Cottage', 'Red Roof', 'Brown Door'],
+    traitRarities: {},
+    draw: (ctx) => drawCottage(ctx, { roofStyle:'red', doorStyle:'brown', material:'plaster', hasBush:true }),
+  },
+  {
+    id: 'townhouse',
+    label: 'Townhouse',
+    rarity: 'Common',
+    traits: ['Base Type: Townhouse', 'Slate Roof', 'Brick'],
+    traitRarities: {},
+    draw: (ctx) => drawTownhouse(ctx, { roofStyle:'slate', doorStyle:'brown', material:'brick', hasChimney:true }),
+  },
+  {
+    id: 'villa',
+    label: 'Villa',
+    rarity: 'Uncommon',
+    traits: ['Base Type: Villa', 'Tiled Roof', 'Columns'],
+    traitRarities: { 'Base Type: Villa': 'Uncommon' },
+    draw: (ctx) => drawVilla(ctx, { roofStyle:'tiled', doorStyle:'brown', hasBush:true }),
+  },
+  {
+    id: 'haunted',
+    label: 'Haunted Manor',
+    rarity: 'Legendary',
+    traits: ['Base Type: Haunted ✦✦✦✦', 'Gothic Spire', 'Turret', 'Dead Grounds'],
+    traitRarities: { 'Base Type: Haunted ✦✦✦✦': 'Legendary' },
+    draw: (ctx) => drawHaunted(ctx, { hasChimney: true }),
+  },
+];
+
+const TRAIT_HOUSES = [
+  {
+    id: 'cottage_thatched',
+    label: 'Cottage #2',
+    rarity: 'Uncommon',
+    traits: ['Cottage Base', 'Thatched Roof ✦', 'Gold Door ✦', 'Brick'],
+    draw: (ctx) => drawCottage(ctx, { roofStyle:'thatched', doorStyle:'gold', material:'brick', hasBush:true }),
+  },
+  {
+    id: 'cottage_shutters',
+    label: 'Cottage #3',
+    rarity: 'Rare',
+    traits: ['Cottage Base', 'Green Roof ✦', 'Red Door ✦', 'Shutters ✦✦', 'Antenna'],
+    draw: (ctx) => drawCottage(ctx, { roofStyle:'green', doorStyle:'red', material:'plaster', hasShutters:true, hasAntenna:true }),
+  },
+  {
+    id: 'townhouse_mansard',
+    label: 'Townhouse #2',
+    rarity: 'Rare',
+    traits: ['Townhouse Base', 'Mansard Roof ✦✦', 'Gold Door ✦', 'Stone', 'Chimney'],
+    draw: (ctx) => drawTownhouse(ctx, { roofStyle:'mansard', doorStyle:'gold', material:'stone', hasChimney:true }),
+  },
+  {
+    id: 'villa_blue',
+    label: 'Villa #2',
+    rarity: 'Epic',
+    traits: ['Villa Base ✦', 'Green Roof ✦', 'Blue Door ✦✦', 'Columns ✦', 'Bushes'],
+    draw: (ctx) => drawVilla(ctx, { roofStyle:'green', doorStyle:'blue', hasBush:true }),
+  },
+];
+
+const RARE_HOUSES = [
+  {
+    id: 'villa_gold',
+    label: 'Grand Villa',
+    rarity: 'Epic',
+    traits: ['Villa Base ✦', 'Arched Gold Door ✦✦✦', 'Tiled Roof', 'Chimney'],
+    draw: (ctx) => drawVilla(ctx, { roofStyle:'tiled', doorStyle:'gold', hasChimney:true, hasBush:true }),
+  },
+  {
+    id: 'townhouse_antenna',
+    label: 'Signal House',
+    rarity: 'Rare',
+    traits: ['Townhouse Base', 'Slate Roof', 'Brick', 'Rooftop Antenna ✦✦'],
+    draw: (ctx) => drawTownhouse(ctx, { roofStyle:'slate', doorStyle:'red', material:'brick', hasAntenna:true }),
+  },
+  {
+    id: 'haunted_full',
+    label: 'Dead Manor #1',
+    rarity: 'Legendary',
+    traits: ['Haunted Base ✦✦✦✦', 'Turret ✦✦✦', 'Gothic Arch ✦✦', 'Smoke ✦', 'Moon'],
+    draw: (ctx) => drawHaunted(ctx, { hasChimney:true }),
+  },
+];
+
+// ─── RENDER ENGINE ─────────────────────────────────────────────────────────
+function renderHouse(def) {
+  const c = makeCanvas();
+  const ctx = c.getContext('2d');
+  // Fill background
+  ctx.fillStyle = def.id === 'haunted' || def.id === 'haunted_full' ? '#1A1520' : P.sky;
+  ctx.fillRect(0, 0, 24, 24);
+  def.draw(ctx);
+
+  // Scale to display
+  const bigC = document.createElement('canvas');
+  bigC.width = 192; bigC.height = 192;
+  const bigCtx = bigC.getContext('2d');
+  bigCtx.imageSmoothingEnabled = false;
+  bigCtx.drawImage(c, 0, 0, 192, 192);
+  return bigC;
+}
+
+function buildCard(def) {
+  const meta = rarityMeta[def.rarity];
+  const canvas = renderHouse(def);
+
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.style.setProperty('--rarity-color', meta.color);
+
+  const wrap = document.createElement('div');
+  wrap.className = 'canvas-wrap';
+  if (def.id === 'haunted' || def.id === 'haunted_full') wrap.style.background = '#1A1520';
+  wrap.appendChild(canvas);
+
+  const name = document.createElement('div');
+  name.className = 'card-name';
+  name.textContent = def.label;
+
+  const badge = document.createElement('div');
+  badge.className = 'rarity-badge';
+  badge.style.color = meta.color;
+  badge.style.borderColor = meta.color;
+  badge.textContent = `${meta.symbol} ${def.rarity.toUpperCase()}`;
+
+  const traitList = document.createElement('div');
+  traitList.className = 'trait-list';
+  traitList.innerHTML = def.traits.map(t => `<span>${t}</span>`).join('<br>');
+
+  card.append(wrap, name, badge, traitList);
+  return card;
+}
+
+function populateSection(id, defs) {
+  const container = document.getElementById(id);
+  defs.forEach(def => container.appendChild(buildCard(def)));
+}
+
+populateSection('bases', BASE_HOUSES);
+populateSection('traits', TRAIT_HOUSES);
+populateSection('rares', RARE_HOUSES);
+</script>
+</body>
+</html>
