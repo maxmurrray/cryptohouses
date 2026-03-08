@@ -3,84 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CryptoHouses — Every punk is a house</title>
+<title>CryptoHamsters — Every punk is a hamster</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0d0d0d;color:#ddd;font-family:"Courier New",monospace;padding:40px 24px;min-height:100vh}
 h1{font-size:18px;letter-spacing:5px;text-transform:uppercase;color:#fff;margin-bottom:6px}
-.sub{font-size:10px;color:#444;letter-spacing:2px;margin-bottom:48px;line-height:1.8}
-.grid{display:flex;flex-wrap:wrap;gap:40px}
-.card{display:flex;flex-direction:column;align-items:center;gap:10px}
-.pair{display:flex;align-items:center;gap:14px}
-.im-wrap{border:2px solid #222;background:#638596;line-height:0}
+.sub{font-size:10px;color:#444;letter-spacing:2px;margin-bottom:48px;line-height:2}
+.grid{display:flex;flex-wrap:wrap;gap:56px}
+.card{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.pair{display:flex;align-items:flex-end;gap:20px}
+.pair-label{font-size:8px;letter-spacing:3px;color:#333;margin-bottom:6px;text-transform:uppercase}
+.im-wrap{border:2px solid #1e1e1e;background:#638596;line-height:0}
 .im-wrap img{display:block;image-rendering:pixelated;image-rendering:crisp-edges}
-.arrow{font-size:18px;color:#333}
-.punk-id{font-size:14px;letter-spacing:2px;color:#888;margin-top:4px}
-.punk-label{font-size:9px;color:#3a3a3a;letter-spacing:1px;text-align:center;max-width:380px}
-.swatches{display:flex;gap:12px;margin-top:4px}
-.sw-group{display:flex;flex-direction:column;align-items:center;gap:4px}
-.sw{width:20px;height:20px;border:1px solid #1a1a1a}
-.sw-lbl{font-size:8px;color:#444;letter-spacing:0}
-.divider{border-top:1px solid #1a1a1a;margin:52px 0 32px}
-.section{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#333;margin-bottom:20px}
-.note{font-size:9px;color:#2a2a2a;letter-spacing:1px;line-height:2;margin-top:48px;border-top:1px solid #1a1a1a;padding-top:16px}
+.arrow{font-size:24px;color:#2a2a2a;padding-bottom:8px}
+.punk-id{font-size:16px;letter-spacing:3px;color:#666;margin-top:4px}
+.punk-traits{font-size:9px;color:#333;letter-spacing:1px}
+.mapping{font-size:9px;color:#2a2a2a;letter-spacing:1px;line-height:1.8;max-width:420px;margin-top:4px;border-left:2px solid #1a1a1a;padding-left:10px}
+.note{font-size:9px;color:#252525;letter-spacing:1px;line-height:2;margin-top:56px;border-top:1px solid #151515;padding-top:20px}
 </style>
 </head>
 <body>
-<h1>CryptoHouses</h1>
+<h1>CryptoHamsters</h1>
 <div class="sub">
-  Every punk is a house.<br>
-  Same pixels. Same colors. Same counts.<br>
-  One‑to‑one — nothing added, nothing removed.
+  Every punk is a hamster.<br>
+  Same pixels. Same colors. Same exact counts. Zero new colors.<br>
+  Only the arrangement changes.
 </div>
-
-<div class="section">Punk → House</div>
 <div class="grid">
     <div class="card">
       <div class="pair">
-        <div class="im-wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAA1UlEQVR4nGNMbp3GQA3ARBVThrdBLLgk5lZnYQriiRnsLppbnXV7YwMDAwMaidV0nAbBTcEEeMzCGUaq/g23NzZASIgRqv7YTSdgENwJ+PUTNgjuO0wGVoAz1hgYGE7vXcPAwGDqHILMJdZFyCEdNemKjr4JXAqNS4KL0PyC32soLppbnfX/phqRoYvPoOTWaYzqtzAVqfoTjjv0MMKaCW5vbMDvLywGYboFvwI4wBfYDKgJkvx0RIx+OCCtPFL1b8BVkhBwEVoY4SmPCHuNyGqGakUtAHLUV4gjJsD2AAAAAElFTkSuQmCC" width="168" height="168"></div>
+        <div>
+          <div class="pair-label">PUNK</div>
+          <div class="im-wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYAAAAGACAIAAAArpSLoAAAGNklEQVR4nO3coY6UZxSA4W6zgsqqXsGGK9jiqWcRVSjICJJNKqrXjOhoEpqMmyAxiHIB4GEdwWz2CriCVlavgo/Mv+/8+z+P/jI5M8m8OeocrTbbHwAKP9YDAMslQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjIHNcDLN3u4rwe4U5Zbbb1CAywAQEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQMY9oD0bve/z8dHPE02yTL8O/v7uB7VsQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkHEP6Cvc95mX0d/f/aCWDQjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjJHS7tvMnrf5+8HP000CXP0x4d/h94v7f81ygYEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAGZ43qAu+bBL/eG3n/48p/Pn9Hns182ICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyBytNtt6hoO2uzgfen/9dj3NIEzi5Gw99N7/Zb9sQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkDmuB2DM5bs3k37+6W+/T/r5o6b+vrRsQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkFncPaDdxfnQ++u362kG+U5PXn4eev9p93SaQW7J9N937PPZLxsQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkFncPaO4O7T7R1Jb2fZfGBgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARn3gL7i5Gw99N79Gvh2NiAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgs7h7QarMder+7OB96//7yauj9w9P7Q+8Pzei9pFHuK91tNiAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgs7h7QoZn7/aBDu9cz+nvSsgEBGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEDGPaCZce+Gu8QGBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGfeAuOHFq3/qEW7489njegQmZAMCMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMe0B79vD0/tD795dXE03yfdzf4TbZgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgIOMeUGzu94MOzfO/Xg+9X222E03Ct7ABARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BAxj2gmRm9H3Rytp5mkAPlvs+82ICAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICDjHhA3uKfDbbIBARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEDmfzizbaWwyFT5AAAAAElFTkSuQmCC" width="192" height="192"></div>
+        </div>
         <div class="arrow">→</div>
-        <div class="im-wrap house"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAAp0lEQVR4nGNMbp3GQA3ARBVTRg1CgLnVWXOrs6hgEB5AX4NweYc0g+ZWZy3L0yFoFgsxpjAwMCzL04nCaxY+g+ZWZyW3TtsL4ya3QkWwKsbpNax6klunkRb9eGzGZRYjmgZiIghuIjIXSxjd3thA0BRVf3Q1VEuQBKIf2Wb8LiXsoktzE/7fVCPoX6K8dudGFEE1BLxGTMDjNAgzRogBjMTbiR9QLfoB7KY62a9IKWQAAAAASUVORK5CYII=" width="168" height="168"></div>
-      </div>
-      <div class="punk-id">#6058</div>
-      <div class="punk-label">Punk #6058 · Male · Earring</div>
-      <div class="swatches"><div class="sw-group"><div class="sw" style="background:#000000" title="#000000"></div><div class="sw-lbl">69px</div></div><div class="sw-group"><div class="sw" style="background:#dbb180" title="#dbb180"></div><div class="sw-lbl">117px</div></div><div class="sw-group"><div class="sw" style="background:#a66e2c" title="#a66e2c"></div><div class="sw-lbl">4px</div></div><div class="sw-group"><div class="sw" style="background:#d29d60" title="#d29d60"></div><div class="sw-lbl">2px</div></div><div class="sw-group"><div class="sw" style="background:#ffd926" title="#ffd926"></div><div class="sw-lbl">1px</div></div></div>
-    </div>
-    <div class="card">
-      <div class="pair">
-        <div class="im-wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAA9UlEQVR4nGNMbp3GQA3ARBVThrdBLLgk5lZnYQriiRnsBs2tzjrlJ4gpbladhcssLF7DZQoDA8MpP0GsLmVgYGBEs2FuddZkc06sSuEg9+R3THdhD2xzcQ48JFEugjjq9sYGXBpU/RuwBhPOWGNgYDi9dw0DA4OpcwgyFxdA9xqyc6ImXdHRN4FLoXFJcBGaB/H4F4uLGBgYVP3xaSDWIEhA7jt9E81ogqbj9Nq+0zedTNUhbLin0CwgyiD82kgzCAL652+AMAoTA0g2yMlUHe4c/PrhAGd5BA8gZJDeshxX7sfnNSdTdbTIIrk8IlIzMqBaUQsANftRZmimMdsAAAAASUVORK5CYII=" width="168" height="168"></div>
-        <div class="arrow">→</div>
-        <div class="im-wrap house"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAAwElEQVR4nGNMbp3GQA3ARBVTRg2igUFm3w+bfT9MBYPwAKIMmludRQWD5lZnzayJJGgWCzGmMDAwzKyJTK/OYsCdDfC5CG4KBOB3F06D0EwhaBZ2g7Cagt8sRrTcT0wEQQCaRiyBfXtjA0FTVP3R1WD32vu5E9/PnYhVHJfRBNIRps24APZ0JJicD2Hc3tgAcQVEBC5OsouQAR5/4XQRVtfhcQ52g4gPF2SAno7goELnFYTRcUWMGINweo1I/XAAAFCCRFP/FgCiAAAAAElFTkSuQmCC" width="168" height="168"></div>
+        <div>
+          <div class="pair-label">HAMSTER</div>
+          <div class="im-wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYAAAAGACAIAAAArpSLoAAAGZklEQVR4nO3cMYucVRSAYSPTbJkm/8Au2LmpUqWxMWlEsBOmEAa0VRyRIA5oLQxEGLBSBAVNSokgqXbTBQslWFpoY7liZZ1m8cZ8vrPzPU99dvbswL7c6lxabrbPARSerxcA5kuAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkFnUC8zdbr2qV3jCcrOd9PPn9vdyPi8gICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjIuAd0wZzevDw0f3z3z4k2+X/M7e+dGy8gICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjIuAd0wUx972a3Xk36+aPc9zlsXkBARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJBxD+gZG72nc3rz8kSb8K+crIfGR+8TLTfbofm58QICMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgMyiXoAxd65t6hXm7e6q3uCgeAEBGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEDGPaDYye9/Dc3v1mP3aB7t3hiaf3H5+dD8p9eOhubfOjkbmh/d/8fPvhqap+UFBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGfeAYi+/987YD9y6PTT+2gfT3scZ3f/x4Oe/svpkaP7edvD7HDX4/XM+LyAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMi4B/SMffH21XqFJ/z821m9wn8y+X0fUl5AQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQmd09oOOzB0Pzb3705dgv2GzH5u+PzT/+7vbY50/s4f2vh+ZfuvHqRJs8ndH9R7//F26thubvvP/60Pzp0fWh+X3jBQRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAAZnZ3QPaN/t2H2fUh9/8OjR/78ZEizyli/79X3ReQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkLm03GzrHQ7Kbr2qV2CP+P86nxcQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRk3AOKvXv1j3oFBnz805V6hYPiBQRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAAZlFvcDc/fDwl3oFRhxdqTc4KF5AQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJBZ1AvM3enR9XoFyHgBARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBmcXz2oN6BPfL399/WKzAjXkBARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJD5B0m3ZKpUK2k2AAAAAElFTkSuQmCC" width="192" height="192"></div>
+        </div>
       </div>
       <div class="punk-id">#3355</div>
-      <div class="punk-label">Punk #3355 · Male · Orange Knit Cap · Normal Beard</div>
-      <div class="swatches"><div class="sw-group"><div class="sw" style="background:#000000" title="#000000"></div><div class="sw-lbl">52px</div></div><div class="sw-group"><div class="sw" style="background:#dbb180" title="#dbb180"></div><div class="sw-lbl">63px</div></div><div class="sw-group"><div class="sw" style="background:#997c59" title="#997c59"></div><div class="sw-lbl">33px</div></div><div class="sw-group"><div class="sw" style="background:#ca4e11" title="#ca4e11"></div><div class="sw-lbl">21px</div></div><div class="sw-group"><div class="sw" style="background:#933709" title="#933709"></div><div class="sw-lbl">17px</div></div><div class="sw-group"><div class="sw" style="background:#a66e2c" title="#a66e2c"></div><div class="sw-lbl">4px</div></div><div class="sw-group"><div class="sw" style="background:#281b09" title="#281b09"></div><div class="sw-lbl">3px</div></div><div class="sw-group"><div class="sw" style="background:#d29d60" title="#d29d60"></div><div class="sw-lbl">2px</div></div></div>
+      <div class="punk-traits">Male · Orange Knit Cap · Normal Beard</div>
+      <div class="mapping">Orange cap → orange head fur. Skin → main body fur. Brown body → belly shadow.</div>
     </div>
     <div class="card">
       <div class="pair">
-        <div class="im-wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAABEUlEQVR4nGNMbp3GQA3ARBVTiDJobnXW3OosSg2aW53FENqgNIGBoFn4DIKaYt1w7yhhswi4CGqKdcO9ow1kumhudZbSBAa4KUrWDQyhDXgchd0gTFMImoXTRZimQM3CARgxEyQ8jHGaXsCAqYsFq/EQU3p+J6KJl+B2EU6vYZqCSxCfiyDgxtm9DAwMGsbOyFwGCxJdxMDAULXikaKKJi4uCS5a152Ih0uCi0gCRBkUVDqfOgbh9xQE4AsjCNg4aQWE4Z8XgUcZesqG5DIIwJIgWaF+xEzc6F5Lbp12rwCqlAE1dIJK58OliMoiya3T5hZAs/i67kS4WRDNcwuysNYX2AMbWSkkpOEiuGodqqUjAPp2hdQ2E2TyAAAAAElFTkSuQmCC" width="168" height="168"></div>
+        <div>
+          <div class="pair-label">PUNK</div>
+          <div class="im-wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYAAAAGACAIAAAArpSLoAAAF70lEQVR4nO3csXETQQCGUczQinAFVEABSoiImFHmFpQoUQMEytQBiQugAjKGhHExEDuxvaDT57t7L965WSn4ZqP/Znc8vQEovK0vAKyXAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAg866+wNqd93f1FRZldzzVV2CAFxCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGTsAV3Y6L7Pw/1h6PxmO3Z+fd8f+//tB7W8gICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgIGMP6BlT7/twWfaD5sULCMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMvaAYpvtYej8+N7NtN8fNff7c1leQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkLEHtHD2d3jNvICAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICBjDyj22vZ03Idr8gICMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMPaCZ+fH926Tf//Dx06TfHzX176XlBQRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAAZnV7QGd93dD5x/uD9Nc5B99/vpr6PzP85dpLnIl0//ese9zWV5AQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQWd0e0Ny9tn2iqa3t966NFxCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGRmvwd03t8Nnf/z+/3Q+Zvbw9B5+zXwcl5AQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQmf0e0O54Gjp/czu2H8TTNtvDpN+3r7RsXkBARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJCZ/R7QqNH9oPPeftBT7PXwP7yAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgs7o9oLXZbA9D5+37cE1eQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkLEHtHCj+z6j+0FTs0+0bF5AQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQsQfEI/Z3uCYvICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyNgDYlE228PQ+d3xNM1FeBEvICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyNgDWrjRfZy5s+8zL15AQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQsQfEI/Z0uCYvICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjI/AVfj2pUTpZB1QAAAABJRU5ErkJggg==" width="192" height="192"></div>
+        </div>
         <div class="arrow">→</div>
-        <div class="im-wrap house"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAAzElEQVR4nGNMbp3GQA3ARBVTRg2igUH7ubP2c2dRwSA8gCiD5lZjdwVpBs2tzlKaQNgsAgZBTGFgYCBoFj6D4KZAgNIEhnsFDI5fsWcpnAahmQI3C5e7sBuE1RT8ZjGi5X5iIggC0DSyYKpY151I0JSg0vloIti9FnRKPuiUPFZxXEZjcREum/G7FLtB68wewjVDXAERgYtjAhLyGh5/4XQRdtfhdg52gzBjhBjA4s12GkUAljrQxWFg6y9T7Abhktj6yxTTLFyKGRgYAFqaRRD2y9AUAAAAAElFTkSuQmCC" width="168" height="168"></div>
+        <div>
+          <div class="pair-label">HAMSTER</div>
+          <div class="im-wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYAAAAGACAIAAAArpSLoAAAGDklEQVR4nO3cIW4cWRRA0fHIa/AKpqUBVlhWkAU0CQqK1MxgcCSTJi0ZBzSzNMgoxAvwCsIig5E8K8gqgkMc/cSVW9V1Dv76fmXLVx+9s93h+AdA4c96AGC9BAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABmfN6gLW7vb6qR/glu8Nx6PzavpfneQEBGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEDGPqCFebrfT3r/Zjvt/aPW9r1r4wUEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZ+4AWZm77a26vrya9f27fy8vyAgIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIx9QC9sdD/O0/1+mkGYxGY79vfdHY4TTXIavICAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgIHNeD8C8/PX33dD5//97N9EkrIEXEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZOwDWpjNdl+P8J2n+7Hz85t/X4+wal5AQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQsQ/oxH25fT90/tXu30nm+FlLn5/neQEBGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEDGPqATt/T9OEufn+d5AQEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQMY+oBd298/lpPc/3e8nvX9qS5+fl+UFBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABmdXtA/pw+XXo/Ga7H/sBh+PY+Yex86/fvB27f9Do947uP3r38XHo/NT7gz4/fBo6PzrPZns16f03jxdD5+fGCwjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjKr2wc0N1Pv95na3Pb7jFr673/pvICAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICBztjsc6xlOyu31VT0CM+L/63leQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkLEP6Ac+XH6tR2BFbh4v6hF+Ky8gICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjInNcDzN3N40U9ApwsLyAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyHwDaapUTJm78OYAAAAASUVORK5CYII=" width="192" height="192"></div>
+        </div>
       </div>
-      <div class="punk-id">#100</div>
-      <div class="punk-label">Punk #100  · Male · Green Mohawk · 3D Glasses</div>
-      <div class="swatches"><div class="sw-group"><div class="sw" style="background:#000000" title="#000000"></div><div class="sw-lbl">55px</div></div><div class="sw-group"><div class="sw" style="background:#ae8b61" title="#ae8b61"></div><div class="sw-lbl">76px</div></div><div class="sw-group"><div class="sw" style="background:#229000" title="#229000"></div><div class="sw-lbl">52px</div></div><div class="sw-group"><div class="sw" style="background:#005580" title="#005580"></div><div class="sw-lbl">18px</div></div><div class="sw-group"><div class="sw" style="background:#86581e" title="#86581e"></div><div class="sw-lbl">4px</div></div><div class="sw-group"><div class="sw" style="background:#5f1d09" title="#5f1d09"></div><div class="sw-lbl">3px</div></div><div class="sw-group"><div class="sw" style="background:#a77c47" title="#a77c47"></div><div class="sw-lbl">2px</div></div></div>
-    </div>
-    <div class="card">
-      <div class="pair">
-        <div class="im-wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAABJElEQVR4nGNMbp3GQA3ARBVTSDNobnUWaQbBNSDrnFudBQkEXMahGwTRgGYWnEQzGrtBWDXjcgLcgVgMQnYIfoBVGRYXEQlweo3UBIXTa3hcVGgvW2gvi8cUhEFYTYHr7z/4GMJFttVWRwVZMSOy2cjGoTkBDiCGMjAw5OfnfxFTR3cRVkc9ff746fPHuLiGTt5YvAYBaD5fdYtBRpATFxcN4EtHhfay/zlEcHHP79uK00WYjsIFklunkeA1OIAHMDI4fOUOPhdhZiIGWAz2H3wMNxEtAzMwMLBguhlN5OblJwwMDNve/T927BiyuMzUBDkkWxlxeWdudRZaUsL0ILJedBehgf6Dj5GNwxMVBAwqtJeFOwR/hBIusyEuIpgsqFaLAABFk48CF5XQ1gAAAABJRU5ErkJggg==" width="168" height="168"></div>
-        <div class="arrow">→</div>
-        <div class="im-wrap house"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAA0klEQVR4nGNMbp3GQA3ARBVTRg1CgLnVWXOrs6hgEB5AX4NweYc0g+ZWZx07doygWSzEmMLAwHDs2DErKys8KhnxZBGoW/ZfQBbBpR6n1yB6kE1hYGBIbp1GWvTjsRmXWeheIyaC4CYSdhEcFNrLQhCaIKZKLLFWaC/79PljBgYGaUlZZEEGBoZ/BkFMF9ZhtZJA9PcffIxsFvOJWf85REgwCNktd+/eZWBgUFZWZmBgwGUKA0l57Z9BEB5ZAl5jYGCYkuQAtRNH6FAZMGKNy4EEAGM2SUajqJWwAAAAAElFTkSuQmCC" width="168" height="168"></div>
-      </div>
-      <div class="punk-id">#42</div>
-      <div class="punk-label">Punk #42   · Ape  · Earring</div>
-      <div class="swatches"><div class="sw-group"><div class="sw" style="background:#000000" title="#000000"></div><div class="sw-lbl">172px</div></div><div class="sw-group"><div class="sw" style="background:#713f1d" title="#713f1d"></div><div class="sw-lbl">71px</div></div><div class="sw-group"><div class="sw" style="background:#c6c6c6" title="#c6c6c6"></div><div class="sw-lbl">5px</div></div><div class="sw-group"><div class="sw" style="background:#dddddd" title="#dddddd"></div><div class="sw-lbl">4px</div></div><div class="sw-group"><div class="sw" style="background:#562600" title="#562600"></div><div class="sw-lbl">4px</div></div><div class="sw-group"><div class="sw" style="background:#6f6f6f" title="#6f6f6f"></div><div class="sw-lbl">2px</div></div><div class="sw-group"><div class="sw" style="background:#723709" title="#723709"></div><div class="sw-lbl">2px</div></div><div class="sw-group"><div class="sw" style="background:#4a1201" title="#4a1201"></div><div class="sw-lbl">2px</div></div><div class="sw-group"><div class="sw" style="background:#e25b26" title="#e25b26"></div><div class="sw-lbl">1px</div></div></div>
+      <div class="punk-id">#6058</div>
+      <div class="punk-traits">Male · Earring</div>
+      <div class="mapping">Mostly bare skin → massive tan fur. Earring → single yellow shine dot on forehead.</div>
     </div></div>
-
 <div class="note">
-  The pixel color counts in each house are identical to the original punk.<br>
-  Skin tone → walls. Hat/hair → roof. Rare traits → door, windows, detail.<br>
-  Black outlines stay black. Sky stays sky. Only the arrangement changes.
+  Pixel color counts are 1:1 identical to the original punk.<br>
+  Skin tone → fur. Hat color → head fur. Accessories → face details.<br>
+  Black outlines stay black. Sky stays sky.
 </div>
 </body>
 </html>
